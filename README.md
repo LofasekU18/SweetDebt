@@ -1,3 +1,3 @@
-# SweetDept
+# SweetDebt
 
 EF/Razor Pages
