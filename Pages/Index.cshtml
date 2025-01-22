@@ -1,13 +1,14 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "SweetDebt";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
     <h2>Long HTML Table Example</h2>
+    <a asp-page-handler="AddTransactionOpen" class="btn btn-primary">Add New Transaction</a>
     <table>
         <thead>
             <tr>
@@ -33,3 +34,7 @@
         </tbody>
     </table>
 </div>
+@if (Model.AddTransactionVisible)
+{
+    <partial name="_AddTransaction" model="Model.NewItem" />
+}

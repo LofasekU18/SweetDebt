@@ -6,7 +6,7 @@ namespace SweetDebt.Contexts
     public class SweetDebtContext : DbContext
     {
         public SweetDebtContext(DbContextOptions<SweetDebtContext> options) : base(options) { }
-        public DbSet<Transaction> Transactions { get; set; }
-
+        public DbSet<MyTransaction> Transactions { get; set; }
+        
     }
 }
