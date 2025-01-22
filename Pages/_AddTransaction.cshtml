@@ -1,5 +1,4 @@
-﻿@using SweetDebt.Models
-@model MyTransaction
+﻿@model SweetDebt.Models.MyTransaction
 
 <div class="model-backdrop"> @*AI added solution*@
     <div class="model-content"> @*AI added solution*@
@@ -8,17 +7,17 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div>
                 <label asp-for="Description">Description:</label>
-                <input asp-for="Description" />
+                <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div>
                 <label asp-for="Amount">Amount:</label>
-                <input asp-for="Amount" />
+                <input asp-for="Amount" class="form-control" />
                 <span asp-validation-for="Amount" class="text-danger"></span>
             </div>
             <div>
                 <label asp-for="TypeOfTransaction">Type of transaction:</label>
-                <select asp-for="TypeOfTransaction" class="form-control" id="PizzaSize">
+                <select asp-for="TypeOfTransaction" class="form-control">
                     <option value="Negative">Negative</option>
                     <option value="Positive">Positive</option>
                 </select>
@@ -30,5 +29,5 @@
     </div>
 </div>
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial"/>
 }

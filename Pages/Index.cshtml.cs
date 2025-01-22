@@ -1,18 +1,26 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SweetDebt.Models;
-using System.Collections.Generic;
-
+using SweetDebt.Service;
+using SweetDebt.Pages;
 public class IndexModel : PageModel
 {
-    public MyTransaction NewItem { get; set; }
-
+    private readonly SweetDebtService _service;
+    
+    public IList<MyTransaction> ListOfTransactions { get; set; }
     // Property to control modal visibility
     public bool AddTransactionVisible { get; set; }
+    [BindProperty]
+    public MyTransaction NewTransaction {  get; set; }
 
-    public void OnGet()
+    public IndexModel (SweetDebtService service)
     {
-        // Handle GET requests
+        _service = service;
+    }
+
+    public async Task OnGet()
+    {
+        ListOfTransactions = await _service.GetTransactionsAsync();
     }
 
     // Open the AddTransaction
@@ -21,16 +29,14 @@ public class IndexModel : PageModel
         AddTransactionVisible = true;
         return Page();
     }
-
-    // Close the AddTransaction
     public IActionResult OnGetAddTransactionClose()
     {
-        AddTransactionVisible = false;
-        return Page();
+        //AddTransactionVisible = false;
+        return RedirectToPage();
     }
 
     // Handle form submission
-    public IActionResult OnPostAddTransactionSave()
+    public async Task<IActionResult> OnPostAddTransactionSave()
     {
         if (!ModelState.IsValid)
         {
@@ -38,12 +44,12 @@ public class IndexModel : PageModel
             return Page();
         }
 
-        // Add the new item to the list
-        //NewItem.Id = Items.Count + 1;
-        //Items.Add(NewItem);
+        await _service.AddTransactionAsync(NewTransaction);
 
 
-        AddTransactionVisible = false;
+
+        //AddTransactionVisible = false;
         return RedirectToPage();
     }
+
 }

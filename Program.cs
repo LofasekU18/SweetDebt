@@ -1,4 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+using SweetDebt.Contexts;
 using SweetDebt.Models;
+using SweetDebt.Service;
 
 namespace SweetDebt
 {
@@ -9,6 +12,8 @@ namespace SweetDebt
             var builder = WebApplication.CreateBuilder(args);
             // Add services to the container.
             builder.Services.AddRazorPages();
+            builder.Services.AddDbContext<SweetDebtContext>(options => options.UseSqlite("Data Source=Data.db"));
+            builder.Services.AddScoped<SweetDebtService>();
 
             var app = builder.Build();
 

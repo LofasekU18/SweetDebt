@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "SweetDebt";
 }
+@using SweetDebt.Models;
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
@@ -36,5 +37,5 @@
 </div>
 @if (Model.AddTransactionVisible)
 {
-    <partial name="_AddTransaction" model="Model.NewItem" />
+    <partial name="_AddTransaction" model="Model.NewTransaction"/>
 }
