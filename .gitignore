@@ -3,6 +3,10 @@
 ##
 ## Get latest from `dotnet new gitignore`
 
+# migration
+[Mm]igrations
+# sql
+*.sql
 # dotenv files
 .env
 # db

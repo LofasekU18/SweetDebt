@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SweetDebt.Models
 {
@@ -7,15 +8,12 @@ namespace SweetDebt.Models
         public int Id { get; set; }
         [Required]
         public string Description { get; set; }
-        [Range(0.00, 999999.99)]
+        [Range(0.00, 999999)]
         public decimal Amount { get; set; }
-        public DateTime Date { get;}
+        public DateTime Date { get; set; } = DateTime.Now;
         public TypeOfTransaction TypeOfTransaction { get; set; }
         
-        public MyTransaction ()
-        {
-            Date = DateTime.Now;
-        }
+       
         
     }
     public enum TypeOfTransaction {Positive, Negative}
