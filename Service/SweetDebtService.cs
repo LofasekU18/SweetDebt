@@ -8,7 +8,7 @@ namespace SweetDebt.Service
     {
         private readonly SweetDebtContext _context;
 
-        public SweetDebtService (SweetDebtContext context)
+        public SweetDebtService(SweetDebtContext context)
         {
             _context = context;
         }
@@ -28,5 +28,16 @@ namespace SweetDebt.Service
                 await _context.SaveChangesAsync();
             }
         }
+        public decimal GetAmountType(MyTransaction transaction)
+        {
+            if (transaction.TypeOfTransaction == TypeOfTransaction.Positive)
+                return transaction.Amount;
+            else
+                return -transaction.Amount;
+        }
+        public decimal GetTotalAmount(IList<MyTransaction> myTransactions)
+        { return myTransactions.Sum((_transaction) => _transaction.TypeOfTransaction == TypeOfTransaction.Positive ? _transaction.Amount : -(_transaction.Amount));
+        }
+
     }
 }

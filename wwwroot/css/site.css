@@ -40,3 +40,29 @@ body {
     width: 50%;
     max-width: 500px;
 }
+table {
+    max-width: 1000px;
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    display: block;
+}
+
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+    td:first-child {
+        width: 30%;
+    }
+
+    td:nth-child(2) {
+        width: 50%;
+    }
+
+    td:nth-child(n+3) {
+        width: auto; /* This will allow the last column to take the remaining space */
+    }
