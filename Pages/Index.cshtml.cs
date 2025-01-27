@@ -8,16 +8,16 @@ namespace SweetDebt.Pages;
 public class IndexModel : PageModel
 {
     public readonly SweetDebtService _service;
-    
+
     public IList<MyTransaction>? ListOfTransactions { get; set; }
 
     public decimal TotalAmount { get; set; }
-   
+
     public bool AddTransactionVisible { get; set; }
     [BindProperty]
-    public MyTransaction? NewTransaction {  get; set; }
+    public MyTransaction? NewTransaction { get; set; }
 
-    public IndexModel (SweetDebtService service)
+    public IndexModel(SweetDebtService service)
     {
         _service = service;
     }
@@ -27,8 +27,6 @@ public class IndexModel : PageModel
         ListOfTransactions = await _service.GetTransactionsAsync();
         TotalAmount = _service.GetTotalAmount(ListOfTransactions);
     }
-
-    // Open the AddTransaction
     public async Task OnGetAddTransactionOpen()
     {
         ListOfTransactions = await _service.GetTransactionsAsync();
@@ -37,27 +35,28 @@ public class IndexModel : PageModel
     }
     public IActionResult OnGetAddTransactionClose()
     {
-        //AddTransactionVisible = false;
+        AddTransactionVisible = false;
         return RedirectToPage();
     }
-
-    // Handle form submission
-    public async Task<IActionResult> OnPostAddTransactionSave()
+    public async Task<IActionResult> OnPostAddTransactionSaveAsync()
     {
         if (!ModelState.IsValid)
         {
             AddTransactionVisible = true;
+            ListOfTransactions = await _service.GetTransactionsAsync();
+            TotalAmount = _service.GetTotalAmount(ListOfTransactions);
             return Page();
         }
-
         await _service.AddTransactionAsync(NewTransaction);
-
-
-
-        //AddTransactionVisible = false;
         return RedirectToPage();
     }
-   
-    
+    public async Task<IActionResult> OnPostRemoveAllTransactionsAsync()
+    {
+        await _service.DeleteAllTransactionsAsync();
+        return RedirectToPage();  
+    }
+
+
+
 
 }

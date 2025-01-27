@@ -38,6 +38,14 @@ namespace SweetDebt.Service
         public decimal GetTotalAmount(IList<MyTransaction> myTransactions)
         { return myTransactions.Sum((_transaction) => _transaction.TypeOfTransaction == TypeOfTransaction.Positive ? _transaction.Amount : -(_transaction.Amount));
         }
+        public async Task DeleteAllTransactionsAsync()
+        {
+            if (_context != null)
+            {
+                await _context.Transactions.ExecuteDeleteAsync();
+                await _context.SaveChangesAsync();
+            }
+        }
 
     }
 }

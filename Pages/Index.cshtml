@@ -2,17 +2,20 @@
 @model SweetDebt.Pages.IndexModel
 @{
     string totalAmount = string.Format($"{0:C2}", Model.TotalAmount);
-    string test = "Test";
     ViewData["Title"] = "SweetDebt";
 }
 @using SweetDebt.Models;
 
 
 <div class="text-center">
-    <p class="">Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    <h2>Long HTML Table Example</h2>
+    <h1>Account</h1>
     <p>Total amount: @Model.TotalAmount</p>
+    <div>
     <a asp-page-handler="AddTransactionOpen" class="btn btn-primary">Add New Transaction</a>
+    <form method="post" asp-page-handler="RemoveAllTransactions">
+        <button type="submit" class="btn btn-danger">Delete All Records</button>
+    </form>
+    </div>
     <table>
         <thead>
             <tr>
