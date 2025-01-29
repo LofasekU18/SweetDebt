@@ -8,8 +8,6 @@ namespace SweetDebt.Pages
 {
     public class _AddItemModalModel : PageModel
     {
-        private readonly SweetDebtService _service;
-        public IList<MyTransaction> ListOfTransactions { get; set; }
         
         public void OnGet()
         {

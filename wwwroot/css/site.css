@@ -1,24 +1,24 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-    padding-top: 56px;
+    padding-top: 100px;
     margin-bottom: 60px;
 }
 /* Modal styles */
@@ -41,29 +41,44 @@ body {
     width: 50%;
     max-width: 500px;
 }
+
 table {
     max-width: 1000px;
     width: 100%;
     border-collapse: collapse;
     margin: 0 auto;
     display: block;
+    align-self: center;
+    padding: 10px;
 }
 
+h2 {
+    padding-top: 40px;
+    text-align:center;
+}
+
+
+div {
+    align-self:center;
+}
 
 th, td {
     border: 1px solid #ddd;
     padding: 8px;
-    text-align: left;
+    text-align: center;
 }
 
     td:first-child {
-        width: 30%;
+        width: 20%;
+        text-align: left;
     }
 
     td:nth-child(2) {
-        width: 50%;
+        width: 65%;
+        text-align: left;
     }
 
     td:nth-child(n+3) {
-        width: auto; /* This will allow the last column to take the remaining space */
+        width: auto;
+        text-align: right;
     }

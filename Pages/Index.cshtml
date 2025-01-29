@@ -1,20 +1,20 @@
 ﻿@page
 @model SweetDebt.Pages.IndexModel
 @{
-    string totalAmount = string.Format($"{0:C2}", Model.TotalAmount);
+    var totalAmount = Model.TotalAmount;
+    string formatedAmount = string.Format("{0:#,0.00} CZK", totalAmount);
     ViewData["Title"] = "SweetDebt";
 }
 @using SweetDebt.Models;
-
-
-<div class="text-center">
-    <h1>Account</h1>
-    <p>Total amount: @Model.TotalAmount</p>
-    <div>
-    <a asp-page-handler="AddTransactionOpen" class="btn btn-primary">Add New Transaction</a>
-    <form method="post" asp-page-handler="RemoveAllTransactions">
-        <button type="submit" class="btn btn-danger">Delete All Records</button>
-    </form>
+<div class="row justify-content-center">
+        <div class="col-auto" id="buttons">
+        <a asp-page-handler="AddTransactionOpen" class="btn btn-primary w-200">Add New Transaction</a>
+        </div>
+        <div class="col-auto">
+            <form method="post" asp-page-handler="RemoveAllTransactions" class="w-200">
+                <button type="submit" class="btn btn-danger w-200">Delete All Records</button>
+            </form>
+        </div>
     </div>
     <table>
         <thead>
@@ -24,20 +24,24 @@
                 <th>Amount</th>
             </tr>
         </thead>
-        <tbody>            
-                @{if(Model.ListOfTransactions is not null)
+        <tbody>
+            @{
+                if (Model.ListOfTransactions is not null)
                 {
-                    foreach (var transaction in Model.ListOfTransactions){
-                <tr>
-                    <td>@transaction.Date</td>
-                    <td>@transaction.Description</td>
-                    <td>@Model._service.GetAmountType(transaction)</td>
-                </tr>
-                    }}}
+                    foreach (var transaction in Model.ListOfTransactions)
+                    {
+                        <tr>
+                            <td>@transaction.Date</td>
+                            <td>@transaction.Description</td>
+                            <td>@string.Format("{0:#,0.00} CZK", Convert.ToDecimal(Model._service.GetAmountType(transaction)))</td>
+                        </tr>
+                    }
+                }
+            }
         </tbody>
     </table>
-</div>
+<h2 >Total amount: @formatedAmount</h2>
 @if (Model.AddTransactionVisible)
 {
-    <partial name="_AddTransaction" model="Model.NewTransaction"/>
+    <partial name="_AddTransaction" model="Model.NewTransaction" />
 }
