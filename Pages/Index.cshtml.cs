@@ -8,6 +8,7 @@ namespace SweetDebt.Pages;
 public class IndexModel : PageModel
 {
     public readonly SweetDebtService _service;
+    private bool Guest { get; set; }
 
     public IList<MyTransaction>? ListOfTransactions { get; set; }
 
@@ -20,6 +21,7 @@ public class IndexModel : PageModel
     public IndexModel(SweetDebtService service)
     {
         _service = service;
+        Guest = false;
     }
 
     public async Task OnGet()
@@ -40,23 +42,25 @@ public class IndexModel : PageModel
     }
     public async Task<IActionResult> OnPostAddTransactionSaveAsync()
     {
-        if (!ModelState.IsValid)
+        if (!Guest)
         {
-            AddTransactionVisible = true;
-            ListOfTransactions = await _service.GetTransactionsAsync();
-            TotalAmount = _service.GetTotalAmount(ListOfTransactions);
-            return Page();
+            if (!ModelState.IsValid)
+            {
+                AddTransactionVisible = true;
+                ListOfTransactions = await _service.GetTransactionsAsync();
+                TotalAmount = _service.GetTotalAmount(ListOfTransactions);
+                return Page();
+            }
+            await _service.AddTransactionAsync(NewTransaction);
+            return RedirectToPage();
         }
-        await _service.AddTransactionAsync(NewTransaction);
+
         return RedirectToPage();
+
     }
     public async Task<IActionResult> OnPostRemoveAllTransactionsAsync()
     {
         await _service.DeleteAllTransactionsAsync();
-        return RedirectToPage();  
+        return RedirectToPage();
     }
-
-
-
-
 }
