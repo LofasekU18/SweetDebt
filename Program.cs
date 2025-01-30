@@ -12,7 +12,7 @@ namespace SweetDebt
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            builder.Services.AddRazorPages(options => options.Conventions.AllowAnonymousToPage("/Privacy"));
+            builder.Services.AddRazorPages(options => options.Conventions.AllowAnonymousToPage("/Privacy").AllowAnonymousToPage("/Error"));
             builder.Services.AddDbContext<SweetDebtContext>(options => options.UseSqlite("Data Source=Data.db"));
             builder.Services.AddScoped<TransactionsService>();
             builder.Services.AddScoped<LoginService>();
