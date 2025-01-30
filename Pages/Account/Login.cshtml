@@ -21,7 +21,7 @@
 <body class="body">
     <div class="container">
         <div class="row">
-            <form id="loginForm" method="post" class="col-md-4 mx-auto">
+            <form method="post" class="col-md-4 mx-auto">
                 <div class="text-center mt-5" style="font-size: 20px;">
                     Simple App Test
                 </div>
@@ -29,18 +29,21 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="accordion">
                     <div class="form-group">
-                        <label asp-for=""></label>
-                        <input asp-for="Username" class="form-control" autocomplete="off" />
-                        <span asp-validation-for="Username" class="text-danger"></span>
+                        <label asp-for="LogginUser.Username"></label>
+                        <input asp-for="LogginUser.Username" class="form-control" autocomplete="off" />
+                        <span asp-validation-for="LogginUser.Username" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Password"></label>
-                        <input asp-for="Password" class="form-control" autocomplete="off" />
+                        <label asp-for="LogginUser.PasswordHash"></label>
+                        <input asp-for="LogginUser.PasswordHash" class="form-control" autocomplete="off" />
                     </div>
                     <div class="form-group text-center mt-2">
                         <button type="submit" class="btn btn-outline-info">Log in</button>
                     </div>
                 </div>
+            </form>
+            <form asp-page-handler="CreateTestUser" method="post" class="text-center">
+                <button type="submit" class="btn btn-outline-info">Create test/test</button>
             </form>
         </div>
     </div>

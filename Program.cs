@@ -42,11 +42,11 @@ namespace SweetDebt
             app.UseAuthorization();
 
             app.MapRazorPages().RequireAuthorization();
-            app.Use(async (context, next) => //testing
-            {
-                Console.WriteLine($"{context.Request.Method} {context.Request.Path} {context.Response.StatusCode}");
-                await next();
-            });
+            //app.Use(async (context, next) => //testing
+            //{
+            //    Console.WriteLine($"{context.Request.Method} {context.Request.Path} {context.Response.StatusCode}");
+            //    await next();
+            //});
 
             app.Run();
         }

@@ -13,7 +13,7 @@ namespace SweetDebt.Service
         {
             _context = context;
         }
-        public async Task RegisterUser(string username, string password)
+        public async Task RegisterUserAsync(string username, string password)
         {
             var user = new User
             {
@@ -23,7 +23,7 @@ namespace SweetDebt.Service
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
         }
-        public async Task<bool> VerifyUser(string username, string password)
+        public async Task<bool> VerifyUserAsync(string username, string password)
         {
 
             {

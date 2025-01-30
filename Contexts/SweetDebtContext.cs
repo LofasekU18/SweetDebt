@@ -8,6 +8,5 @@ namespace SweetDebt.Contexts
         public SweetDebtContext(DbContextOptions<SweetDebtContext> options) : base(options) { }
         public DbSet<MyTransaction> Transactions { get; set; }
         public DbSet<User> Users { get; set; }
-        
     }
 }

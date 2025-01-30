@@ -16,7 +16,7 @@ public class IndexModel : PageModel
 
     public bool AddTransactionVisible { get; set; }
     [BindProperty]
-    public MyTransaction? NewTransaction { get; set; }
+    public MyTransaction NewTransaction { get; set; }
 
     public IndexModel(TransactionsService service)
     {

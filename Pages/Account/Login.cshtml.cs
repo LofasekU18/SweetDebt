@@ -8,6 +8,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using System.Security.Principal;
 using SweetDebt.Models;
+using SQLitePCL;
 
 namespace SweetDebt.Pages.Account;
 
@@ -15,7 +16,7 @@ namespace SweetDebt.Pages.Account;
 public class LoginModel : PageModel
 {
     private readonly LoginService _loginService;
-      
+    [BindProperty]  
     public User LogginUser { get; set; }
 
     public LoginModel(LoginService loginService)
@@ -23,23 +24,27 @@ public class LoginModel : PageModel
         _loginService = loginService;
     }
 
-    public void OnGet(string returnUrl = null)
+    public void OnGet()
     {
-        //if (!string.IsNullOrEmpty(ErrorMessage))
-        //{
-        //    ModelState.AddModelError(string.Empty, ErrorMessage);
-        //}
-
-        //returnUrl = returnUrl ?? Url.Content("~/");
-
-        //ReturnUrl = returnUrl;
+      
     }
-    public async Task<IActionResult> OnPost(string returnUrl)
+    public async Task<IActionResult> OnPostCreateTestUserAsync()
     {
-        returnUrl = returnUrl ?? Url.Content("~/");
+        var IsTestAccount = await _loginService.VerifyUserAsync("test", "test");
+        if (!IsTestAccount)
+        {
+            await _loginService.RegisterUserAsync("test", "test");
+            return Redirect("~/");
+        }
+        ModelState.AddModelError(string.Empty, "Test account is already created.");
+        return Redirect("~/");
+    }
+    public async Task<IActionResult> OnPost()
+    {
+        var user = LogginUser;
         if (ModelState.IsValid)
         {
-            var verificationResult = true; 
+            var verificationResult = await _loginService.VerifyUserAsync(user.Username,user.PasswordHash); 
 
             if (verificationResult)
             {
@@ -50,7 +55,7 @@ public class LoginModel : PageModel
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
 
-                return Redirect(returnUrl);
+                return Redirect("~/");
             }
 
             ModelState.AddModelError(string.Empty, "Invalid login attempt.");
