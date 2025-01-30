@@ -4,11 +4,11 @@ using SweetDebt.Models;
 
 namespace SweetDebt.Service
 {
-    public class SweetDebtService
+    public class TransactionsService
     {
         private readonly SweetDebtContext _context;
 
-        public SweetDebtService(SweetDebtContext context)
+        public TransactionsService(SweetDebtContext context)
         {
             _context = context;
         }
@@ -46,6 +46,7 @@ namespace SweetDebt.Service
                 await _context.SaveChangesAsync();
             }
         }
+
 
     }
 }
