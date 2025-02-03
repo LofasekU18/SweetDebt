@@ -25,21 +25,21 @@ public class LoginModel : PageModel
     }
     public void OnGet()
     {
-    
+
     }
     public async Task<IActionResult> OnPostCreateTestUserAsync()
     {
         var IsTestAccount = await _loginService.VerifyUserAsync("test", "test");
-        
-            if (!IsTestAccount)
-            {
-                await _loginService.RegisterUserAsync("test", "test");
-                return Redirect("~/");
 
-            }
-            ModelState.AddModelError(string.Empty, "Test account is already exist.");
-            return Redirect("~/");
-        
+        if (!IsTestAccount)
+        {
+            await _loginService.RegisterUserAsync("test", "test");
+            return Page();
+
+        }
+        ModelState.AddModelError(string.Empty, "Test account is already exist.");
+        return Page();
+
     }
     public async Task<IActionResult> OnPostLoginAsync()
     {
@@ -55,7 +55,7 @@ public class LoginModel : PageModel
                     new Claim(ClaimTypes.Name, LogginUser.Username)
                 };
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity),new AuthenticationProperties {IsPersistent=false,ExpiresUtc = null});
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity), new AuthenticationProperties { IsPersistent = false, ExpiresUtc = null });
 
                 return Redirect("~/");
             }

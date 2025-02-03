@@ -9,11 +9,8 @@
 <body class="body">
     <div class="container">
         <div class="row">
+            <h1 class="text-center">Login</h1>
             <form asp-page-handler="Login" method="post" class="col-md-4 mx-auto">
-                <div class="text-center mt-5" style="font-size: 20px;">
-                    <h1>Login</h1>
-                </div>
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="accordion">
                     <div class="form-group">
                         <label asp-for="LogginUser.Username"></label>
@@ -22,9 +19,10 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="LogginUser.PasswordHash">Password</label>
-                        <input asp-for="LogginUser.PasswordHash" class="form-control" autocomplete="off" type="password"/>
+                        <input asp-for="LogginUser.PasswordHash" class="form-control" autocomplete="off" type="password" />
                         @* <span asp-validation-for="LogginUser.PasswordHash" class="text-danger"></span> *@
                     </div>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group text-center mt-2">
                         <button type="submit" class="btn btn-outline-info">Log in</button>
                     </div>
