@@ -47,9 +47,7 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin: 0 auto;
-    display: block;
     align-self: center;
-    padding: 10px;
 }
 
 h2 {

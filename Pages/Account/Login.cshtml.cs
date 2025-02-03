@@ -16,35 +16,37 @@ namespace SweetDebt.Pages.Account;
 public class LoginModel : PageModel
 {
     private readonly LoginService _loginService;
-    [BindProperty]  
-    public User LogginUser { get; set; }
+    [BindProperty]
+    public User LogginUser { get; set; } // using PasswordHash like Password for check login
 
     public LoginModel(LoginService loginService)
     {
         _loginService = loginService;
     }
-
     public void OnGet()
     {
-      
+    
     }
     public async Task<IActionResult> OnPostCreateTestUserAsync()
     {
         var IsTestAccount = await _loginService.VerifyUserAsync("test", "test");
-        if (!IsTestAccount)
-        {
-            await _loginService.RegisterUserAsync("test", "test");
+        
+            if (!IsTestAccount)
+            {
+                await _loginService.RegisterUserAsync("test", "test");
+                return Redirect("~/");
+
+            }
+            ModelState.AddModelError(string.Empty, "Test account is already exist.");
             return Redirect("~/");
-        }
-        ModelState.AddModelError(string.Empty, "Test account is already created.");
-        return Redirect("~/");
+        
     }
-    public async Task<IActionResult> OnPost()
+    public async Task<IActionResult> OnPostLoginAsync()
     {
         var user = LogginUser;
         if (ModelState.IsValid)
         {
-            var verificationResult = await _loginService.VerifyUserAsync(user.Username,user.PasswordHash); 
+            var verificationResult = await _loginService.VerifyUserAsync(user.Username, user.PasswordHash);
 
             if (verificationResult)
             {
@@ -53,7 +55,7 @@ public class LoginModel : PageModel
                     new Claim(ClaimTypes.Name, LogginUser.Username)
                 };
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity),new AuthenticationProperties {IsPersistent=false,ExpiresUtc = null});
 
                 return Redirect("~/");
             }

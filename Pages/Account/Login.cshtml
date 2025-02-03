@@ -1,31 +1,18 @@
 ﻿@page
 @model SweetDebt.Pages.Account.LoginModel
 @{
-    
+    ViewData["Title"] = "SweetDebt - Login";
 }
 
 <!DOCTYPE html>
 <html>
-
-<head>
-    <title>Login | Simple App Test</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-</head>
-
 <body class="body">
     <div class="container">
         <div class="row">
-            <form method="post" class="col-md-4 mx-auto">
+            <form asp-page-handler="Login" method="post" class="col-md-4 mx-auto">
                 <div class="text-center mt-5" style="font-size: 20px;">
-                    Simple App Test
+                    <h1>Login</h1>
                 </div>
-                <hr />
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="accordion">
                     <div class="form-group">
@@ -34,8 +21,9 @@
                         <span asp-validation-for="LogginUser.Username" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="LogginUser.PasswordHash"></label>
-                        <input asp-for="LogginUser.PasswordHash" class="form-control" autocomplete="off" />
+                        <label asp-for="LogginUser.PasswordHash">Password</label>
+                        <input asp-for="LogginUser.PasswordHash" class="form-control" autocomplete="off" type="password"/>
+                        @* <span asp-validation-for="LogginUser.PasswordHash" class="text-danger"></span> *@
                     </div>
                     <div class="form-group text-center mt-2">
                         <button type="submit" class="btn btn-outline-info">Log in</button>
@@ -49,11 +37,5 @@
     </div>
 
     <partial name="_ValidationScriptsPartial" />
-    <style>
-        .form-control.is-invalid, .was-validated .form-control:invalid {
-            background-image: none;
-            border-color: #ced4da;
-        }
-    </style>
 </body>
 </html>

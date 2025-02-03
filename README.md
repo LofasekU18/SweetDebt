@@ -14,5 +14,5 @@ EF/Razor Pages/Docker/Azure App Service
 ### Figure out:
 	1.	Login page / created from few sources, need to fully understand
 	2.	Dockerfile with volume, EF migration and update-database after deploy
-	3.	PasswordHasher<T>
+	3.	Azure
 

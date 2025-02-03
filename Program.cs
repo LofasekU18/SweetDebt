@@ -8,7 +8,6 @@ namespace SweetDebt
 {
     public class Program
     {
-        //TODO: Service for handle and store username and password
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -19,9 +18,6 @@ namespace SweetDebt
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie();
             builder.Services.AddAuthorization();
-
-
-
             var app = builder.Build();
 
             if (!app.Environment.IsDevelopment())
@@ -38,15 +34,16 @@ namespace SweetDebt
 
 
             app.UseRouting();
-
+            app.Use(async (context, next) => //testing
+            {
+                Console.WriteLine($"{context.Request.Method} {context.Request.Path} {context.Response.StatusCode}");
+                await next();
+            });
             app.UseAuthorization();
 
+
             app.MapRazorPages().RequireAuthorization();
-            //app.Use(async (context, next) => //testing
-            //{
-            //    Console.WriteLine($"{context.Request.Method} {context.Request.Path} {context.Response.StatusCode}");
-            //    await next();
-            //});
+
 
             app.Run();
         }
