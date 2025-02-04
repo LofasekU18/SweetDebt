@@ -6,6 +6,7 @@ using SweetDebt.Pages;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace SweetDebt.Pages;
 public class IndexModel : PageModel

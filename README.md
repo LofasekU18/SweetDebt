@@ -15,7 +15,6 @@ SweetDebt serving me to remember, how much money I borrow from my gf.
 	1.	Add more funcions (Delete,NewUser,EmailAddress,Sending emails after events,..)
 
 ### Figure out:
-	1.	IUserClaimsPrincipalFactory<TUser> Interface to handle if IsAdmin login or not
-	2.	Dockerfile with volume, EF migration and update-database after deploy, add create of admin accout(for now)
-	3.	Azure deploy
+	1.	Dockerfile with volume, EF migration and update-database after deploy, add create of admin accout(for now)
+	2.	Azure deploy
 
