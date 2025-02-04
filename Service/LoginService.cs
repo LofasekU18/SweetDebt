@@ -18,7 +18,7 @@ namespace SweetDebt.Service
             var user = new User
             {
                 Username = username,
-                PasswordHash = _passwordHasher.HashPassword(null, password)
+                Password = _passwordHasher.HashPassword(null, password)
             };
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
@@ -30,7 +30,7 @@ namespace SweetDebt.Service
                 var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
                 if (user == null) return false;
                 
-                var passwordVerification = _passwordHasher.VerifyHashedPassword(null, user.PasswordHash, password);
+                var passwordVerification = _passwordHasher.VerifyHashedPassword(null, user.Password, password);
 
 
                 return passwordVerification == PasswordVerificationResult.Success;

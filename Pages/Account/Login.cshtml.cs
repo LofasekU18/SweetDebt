@@ -46,7 +46,7 @@ public class LoginModel : PageModel
         var user = LogginUser;
         if (ModelState.IsValid)
         {
-            var verificationResult = await _loginService.VerifyUserAsync(user.Username, user.PasswordHash);
+            var verificationResult = await _loginService.VerifyUserAsync(user.Username, user.Password);
 
             if (verificationResult)
             {
