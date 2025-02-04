@@ -13,12 +13,13 @@ namespace SweetDebt.Service
         {
             _context = context;
         }
-        public async Task RegisterUserAsync(string username, string password)
+        public async Task RegisterUserAsync(string username, string password, bool isAdmin=false)
         {
             var user = new User
             {
                 Username = username,
-                Password = _passwordHasher.HashPassword(null, password)
+                Password = _passwordHasher.HashPassword(null, password),
+                IsAdmin = isAdmin
             };
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
@@ -35,6 +36,11 @@ namespace SweetDebt.Service
 
                 return passwordVerification == PasswordVerificationResult.Success;
             }
+        }
+        public async Task<User> GetUserAsync(string username, string password)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+            return user != null && _passwordHasher.VerifyHashedPassword(null, user.Password, password) == PasswordVerificationResult.Success ? user : null;
         }
     }
 }

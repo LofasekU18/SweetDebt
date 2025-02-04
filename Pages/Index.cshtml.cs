@@ -13,6 +13,7 @@ public class IndexModel : PageModel
     public readonly TransactionsService _service;
     public IList<MyTransaction>? ListOfTransactions { get; set; }
     public decimal TotalAmount { get; set; }
+    public bool IsAdmin => User.HasClaim(c => c.Type == "IsAdmin" && c.Value == "True");
     public bool AddTransactionVisible { get; set; }
     [BindProperty]
     public MyTransaction NewTransaction { get; set; }
@@ -44,20 +45,29 @@ public class IndexModel : PageModel
     }
     public async Task<IActionResult> OnPostAddTransactionSaveAsync()
     {
-        if (!ModelState.IsValid)
+        if (ModelState.IsValid && IsAdmin)
         {
-            AddTransactionVisible = true;
-            ListOfTransactions = await _service.GetTransactionsAsync();
-            TotalAmount = _service.GetTotalAmount(ListOfTransactions);
-            return Page();
+            await _service.AddTransactionAsync(NewTransaction);
+            return RedirectToPage();
         }
-        await _service.AddTransactionAsync(NewTransaction);
-        return RedirectToPage();
+        
+        AddTransactionVisible = true;
+        ListOfTransactions = await _service.GetTransactionsAsync();
+        TotalAmount = _service.GetTotalAmount(ListOfTransactions);
+        ModelState.AddModelError(string.Empty, "Not login as admin");
+        return Page();
     }
     
     public async Task<IActionResult> OnPostRemoveAllTransactionsAsync()
     {
-        await _service.DeleteAllTransactionsAsync();
-        return RedirectToPage();
+        if (IsAdmin)
+        {
+            await _service.DeleteAllTransactionsAsync();
+            return RedirectToPage();
+        }
+        ListOfTransactions = await _service.GetTransactionsAsync();
+        TotalAmount = _service.GetTotalAmount(ListOfTransactions);
+        ModelState.AddModelError(string.Empty, "Not login as admin");
+        return Page();
     }
 }

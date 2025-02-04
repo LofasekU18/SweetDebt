@@ -16,6 +16,7 @@ namespace SweetDebt.Pages.Account;
 public class LoginModel : PageModel
 {
     private readonly LoginService _loginService;
+  
     [BindProperty]
     public User LogginUser { get; set; } // using PasswordHash like Password for check login
 
@@ -23,9 +24,9 @@ public class LoginModel : PageModel
     {
         _loginService = loginService;
     }
-    public void OnGet()
+    public async Task OnGet()
     {
-
+        //await _loginService.RegisterUserAsync("admin", "test", true);
     }
     public async Task<IActionResult> OnPostCreateTestUserAsync()
     {
@@ -43,12 +44,27 @@ public class LoginModel : PageModel
     }
     public async Task<IActionResult> OnPostLoginAsync()
     {
-        var user = LogginUser;
+        var userLogin = LogginUser;
         if (ModelState.IsValid)
         {
-            var verificationResult = await _loginService.VerifyUserAsync(user.Username, user.Password);
+            var user = await _loginService.GetUserAsync(userLogin.Username, userLogin.Password);
 
-            if (verificationResult)
+            if (user != null && user.IsAdmin == true)
+            {
+                LogginUser.IsAdmin = user.IsAdmin;
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, LogginUser.Username),
+                    new Claim("IsAdmin", LogginUser.IsAdmin.ToString())
+                };
+
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
+
+                return Redirect("~/");
+            }
+            if (user != null)
             {
                 var claims = new List<Claim>
                 {
