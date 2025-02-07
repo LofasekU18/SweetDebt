@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SweetDebt.Contexts;
 using SweetDebt.Models;
 using SweetDebt.Service;
+using System;
 
 namespace SweetDebt
 {
@@ -20,6 +21,14 @@ namespace SweetDebt
             builder.Services.AddAuthorization();
             var app = builder.Build();
 
+            using (var scope = app.Services.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetRequiredService<SweetDebtContext>();
+                dbContext.Database.Migrate();
+                var dbService = scope.ServiceProvider.GetRequiredService<LoginService>();
+                dbService.RegisterUserAsync("admin", "test", true);
+
+            }
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Error");
