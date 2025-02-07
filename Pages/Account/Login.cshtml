@@ -1,0 +1,39 @@
+﻿@page
+@model SweetDebt.Pages.Account.LoginModel
+@{
+    ViewData["Title"] = "SweetDebt - Login";
+}
+
+<!DOCTYPE html>
+<html>
+<body class="body">
+    <div class="container">
+        <div class="row">
+            <h1 class="text-center">Login</h1>
+            <form asp-page-handler="Login" method="post" class="col-md-4 mx-auto">
+                <div class="accordion">
+                    <div class="form-group">
+                        <label asp-for="LogginUser.Username"></label>
+                        <input asp-for="LogginUser.Username" class="form-control" autocomplete="off" />
+                        <span asp-validation-for="LogginUser.Username" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="LogginUser.Password">Password</label>
+                        <input asp-for="LogginUser.Password" class="form-control" autocomplete="off" type="password" />
+                        <span asp-validation-for="LogginUser.Password" class="text-danger"></span>
+                    </div>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group text-center mt-2">
+                        <button type="submit" class="btn btn-outline-secondary">Log in</button>
+                    </div>
+                </div>
+            </form>
+            <form asp-page-handler="CreateTestUser" method="post" class="text-center">
+                <button type="submit" class="btn btn-outline-secondary">Create test/test</button>
+            </form>
+        </div>
+    </div>
+
+    <partial name="_ValidationScriptsPartial" />
+</body>
+</html>

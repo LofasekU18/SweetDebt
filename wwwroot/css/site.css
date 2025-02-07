@@ -47,13 +47,13 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin: 0 auto;
-    display: block;
     align-self: center;
-    padding: 10px;
+    padding-top: 10px
 }
 
 h2 {
     padding-top: 40px;
+    padding-bottom: 20px;
     text-align:center;
 }
 

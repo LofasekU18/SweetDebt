@@ -7,14 +7,15 @@
 }
 @using SweetDebt.Models;
 <div class="row justify-content-center">
-        <div class="col-auto" id="buttons">
-        <a asp-page-handler="AddTransactionOpen" class="btn btn-primary w-200">Add New Transaction</a>
+        <div class="col-auto">
+        <a asp-page-handler="AddTransactionOpen" class="btn btn-primary">Add New Transaction</a>
         </div>
         <div class="col-auto">
-            <form method="post" asp-page-handler="RemoveAllTransactions" class="w-200">
-                <button type="submit" class="btn btn-danger w-200">Delete All Records</button>
+            <form method="post" asp-page-handler="RemoveAllTransactions">
+                <button type="submit" class="btn btn-danger">Delete All Records</button>
             </form>
         </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     </div>
     <table>
         <thead>
@@ -40,7 +41,12 @@
             }
         </tbody>
     </table>
-<h2 >Total amount: @formatedAmount</h2>
+<h2>Total amount: @formatedAmount</h2>
+
+<form method="post" asp-page="/Index" asp-page-handler="Logout" class="text-center">
+    <button type="submit" class="btn btn-outline-secondary">Logout</button>
+</form>
+
 @if (Model.AddTransactionVisible)
 {
     <partial name="_AddTransaction" model="Model.NewTransaction" />
