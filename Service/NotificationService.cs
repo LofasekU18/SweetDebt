@@ -7,6 +7,7 @@ namespace SweetDebt.Service
 {
     public class NotificationService
     {
+        private const string urlAzure = "\nhttps://sweetdebt-bkekdqdwb5f8hca8.germanywestcentral-01.azurewebsites.net/";
         private readonly MimeMessage _email;
         private readonly SmtpClient _smtpClient;
 
@@ -15,16 +16,16 @@ namespace SweetDebt.Service
             _email = new MimeMessage();
             _smtpClient = new SmtpClient();
         }
-        public async Task SendNotificationAsync(string subject, MyTransaction transaction)
+        public async Task SendNotificationAsync(MyTransaction transaction)
         {
             var email = new MimeMessage();
             email.From.Add(new MailboxAddress($"Zloděj", "pokusomyl007@email.cz"));
             email.To.Add(new MailboxAddress("Čudlík", "lstrnad13@gmail.com"));
-            email.Subject = "Test Email";
+            email.Subject = "Pozor zloděj !";
 
             email.Body = new TextPart("plain")
             {
-                Text = GetText(transaction)
+                Text = GetText(transaction) + urlAzure + " tady se koukneš na stav"
             };
 
             using (var client = new SmtpClient())
@@ -38,10 +39,12 @@ namespace SweetDebt.Service
             }
 
         }
-        public string GetText(MyTransaction transaction) {
+        private string GetText(MyTransaction transaction)
+        {
             if (transaction.TypeOfTransaction == TypeOfTransaction.Negative)
-                return $"Bylo Ti ukradeno -{transaction.Amount}";
+                return $"Bylo Ti ukradeno -{transaction.Amount} Kč.";
             else
-                return $"Bylo Ti vráceno {transaction.Amount}";
+                return $"Bylo Ti vráceno {transaction.Amount} Kč.";
+        }
     }
 }

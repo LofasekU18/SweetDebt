@@ -12,6 +12,7 @@ namespace SweetDebt.Pages;
 public class IndexModel : PageModel
 {
     public readonly TransactionsService _service;
+    private readonly NotificationService _notificationService;
     public IList<MyTransaction>? ListOfTransactions { get; set; }
     public decimal TotalAmount { get; set; }
     public bool IsAdmin => User.HasClaim(c => c.Type == "IsAdmin" && c.Value == "True");
@@ -19,9 +20,10 @@ public class IndexModel : PageModel
     [BindProperty]
     public MyTransaction NewTransaction { get; set; }
 
-    public IndexModel(TransactionsService service)
+    public IndexModel(TransactionsService service,NotificationService notificationService)
     {
         _service = service;
+        _notificationService = notificationService;
     }
     public async Task<IActionResult> OnPostLogout()
     {
@@ -49,6 +51,7 @@ public class IndexModel : PageModel
         if (ModelState.IsValid && IsAdmin)
         {
             await _service.AddTransactionAsync(NewTransaction);
+            await _notificationService.SendNotificationAsync(NewTransaction);
             return RedirectToPage();
         }
         
