@@ -6,10 +6,10 @@
     }
   },
   "AllowedHosts": "*",
-  "AppSetting": {
-    "ConnectionString": {
+  "AppSetting":{
+    "NotificationEmail": {
       "FromEmail": "",
-      "ToEmail": "lstrnad13@gmail.com",
+      "ToEmail": "",
       "SmtpClient": {
         "SmtpUrl": "",
         "SmtpPort": "",
