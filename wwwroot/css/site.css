@@ -21,7 +21,10 @@ body {
     padding-top: 100px;
     margin-bottom: 60px;
 }
-/* Modal styles */
+.byPass{
+    padding-top:20px;
+}
+/* Model styles */
 .model-backdrop {
     position: fixed;
     top: 0;

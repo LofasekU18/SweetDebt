@@ -17,6 +17,7 @@
         </div>
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     </div>
+    <div class="byPass">
     <table>
         <thead>
             <tr>
@@ -41,6 +42,7 @@
             }
         </tbody>
     </table>
+</div>
 <h2>Total amount: @formatedAmount</h2>
 
 <form method="post" asp-page="/Index" asp-page-handler="Logout" class="text-center">

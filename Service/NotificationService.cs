@@ -7,25 +7,28 @@ namespace SweetDebt.Service
 {
     public class NotificationService
     {
-        private const string urlAzure = "\nhttps://sweetdebt-bkekdqdwb5f8hca8.germanywestcentral-01.azurewebsites.net/";
+        private readonly IConfiguration _configuration;
         private readonly MimeMessage _email;
         private readonly SmtpClient _smtpClient;
+        public string Setting {  get; set; }
 
-        public NotificationService()
+        public NotificationService(IConfiguration configuration)
         {
+            _configuration = configuration;
             _email = new MimeMessage();
             _smtpClient = new SmtpClient();
+            Setting =  _configuration.GetConnectionString("ToEmail");
         }
         public async Task SendNotificationAsync(MyTransaction transaction)
         {
             var email = new MimeMessage();
             email.From.Add(new MailboxAddress($"Zloděj", "pokusomyl007@email.cz"));
-            email.To.Add(new MailboxAddress("Čudlík", "lstrnad13@gmail.com"));
+            email.To.Add(new MailboxAddress("Čudlík", $"{Setting}"));
             email.Subject = "Pozor zloděj !";
 
             email.Body = new TextPart("plain")
             {
-                Text = GetText(transaction) + urlAzure + " tady se koukneš na stav"
+                Text = GetText(transaction)
             };
 
             using (var client = new SmtpClient())
