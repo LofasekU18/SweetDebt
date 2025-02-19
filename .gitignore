@@ -7,7 +7,7 @@
 # sql
 *.sql
 # dotenv files
-[Mm]igrations
+
 .env
 # db
 *.db
